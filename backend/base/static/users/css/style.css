@@ -1,0 +1,71 @@
+#a{
+    font-family: 'Inconsolata', monospace;
+
+}
+.j1{
+font-size:15px;}
+#ty{
+
+    width:100px;
+    height:30px;
+  padding:10px;
+  color:white;
+   background-color:black;
+   margin-top: 15px;
+   border :none;
+}
+#ty{
+    transform: translateY(20px);
+    opacity:0;
+    transition: 0.3s all;
+}
+#yt:hover #ty{
+    transform: translateY(0);
+    opacity:1;
+
+}
+#oo{  font-weight: bold;
+}
+#k1:hover
+    {opacity:0.7;
+}
+#k1{
+height:100px
+}
+#yt{
+    display:flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top:50px;
+
+
+}
+#z{
+    display:flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top:50px;
+
+
+}
+
+.ecr{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+align-items: center;
+}
+#mery{
+    width:30px;
+   margin-left: 22px;
+
+
+}
+.navbar-toggler {
+  border-color: rgb(255,102,203);
+}

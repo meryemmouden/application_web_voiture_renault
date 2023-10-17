@@ -1,0 +1,63 @@
+{% extends 'users/base.html' %}
+{% block title %} Detail  {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow product_data">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="{{produit.image.url}}" class="w-100" alt="image">
+                            </div>
+                            <div class="col-md-8">
+                                <h2 class="mb-0" style="color:black;">
+                                    {{produit.name}}
+                                </h2>
+                                <hr>
+                               <p><b>Fitting Position:</b> {{produit.position}}</p>
+                                  <p><b>Brand Class:</b> {{produit.brand}}</p>
+                                  <p><b>Manufacturer:</b> {{produit.small_description}}</p>
+
+                                <hr>
+                                {%if produit.quantity > 0%}
+                                <label class="badge bg-success">In stock</label>
+                                {%else%}
+                                <label class="badge bg-danger">Out of Stock</label>
+                                 {%endif%}
+                                <div class="row mt-2">
+                                    <div class="col md-3">
+                                        {%csrf_token%}
+                                             {%if produit.quantity > 0%}
+                                        <input type="hidden" value="{{produit.id}}" class="prod_id">
+                                       <label for="quantity"style="color:black;">quantité</label>
+                                        <div  class="input-group text-center mb-3" style="width:130px;">
+                                            <button class="input-group-text decrement-btn">-</button>
+                                        <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
+                                           <button class="input-group-text increment-btn">+</button>
+                                            {%endif%}
+                                        </div>
+
+                                    </div>
+                                    <div class="col md-9" >
+                                        <br/>
+                                             {%if produit.quantity > 0%}
+                                        <button type="button" class="btn btn-primary me-3 float-start addTocartBtn">Ajouter au panier<i class="fa fa-shopping-cart"></i></i></button>
+                                            {%endif%}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

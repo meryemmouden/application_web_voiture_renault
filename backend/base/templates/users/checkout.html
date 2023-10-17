@@ -1,0 +1,192 @@
+{% extends 'users/base.html' %}
+
+
+{% block content %}
+
+    <div class="container my-3">
+        <form action="{% url 'placeorder' %}" method="POST">
+            {%csrf_token%}
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card shadow checkoutform">
+                    <div class="card-body">
+                        <h6>Détail de base</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Prénom</label>
+                                <input type="text" required value="{{request.user.first_name}}" class="form-control" name="fname" placeholder="Entrer Votre Prénom">
+                             </div>
+                               <div class="col-md-6">
+                                <label>nom</label>
+                                <input type="text" required value="{{request.user.last_name}}" class="form-control"  name="lname" placeholder="Entrer Votre Nom">
+                              </div>
+                              <div class="col-md-6 mt-2">
+                                <label>Email</label>
+                                <input type="email" required value="{{request.user.email}}" class="form-control" name="email" placeholder="Entrer Votre Email">
+                              </div>
+                              <div class="col-md-6 mt-2">
+                                <label>Numéro de Téléphone</label>
+                                <input type="text" required value="{{userprofile.phone}}" class="form-control" name="phone" placeholder="Entrer Votre Numéro ">
+                              </div>
+                              <div class="col-md-12 mt-2">
+                                <label>Adresse</label>
+                                <input type="text" required value="{{userprofile.adress}}" class="form-control" name="adress" placeholder="Entrer Votre Adress">
+                              </div>
+                              <div class="col-md-6 mt-2">
+                                <label>Ville</label>
+                                <input type="text" required  value="{{userprofile.city}}" class="form-control" name="city" placeholder="Entrer Votre Ville">
+                              </div>
+                                  <div class="col-md-6 mt-2">
+                                <label>Région</label>
+                                <input type="text" required value="{{userprofile.state}}" class="form-control" name="state" placeholder="Entrer Votre Région">
+                              </div>
+                              <div class="col-md-6 mt-2">
+                                <label>Pays</label>
+                                <input type="text" required value="{{userprofile.country}}" class="form-control" name="country" placeholder="Entrer Votre Pays">
+                              </div>
+                              <div class="col-md-6 mt-2">
+                                <label>Code PIN</label>
+                                <input type="text" required value="{{userprofile.pincode}}" class="form-control" name="pincode" placeholder="entrer Votre Code PIN">
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   <div class="col-md-5">
+       <div class="card shadow">
+                    <div class="card-body">
+                        <h6>Récapitulatif de la commande</h6>
+                        <hr>
+                        {%if cartitems %}
+                        <table class="table table-stripeds table-bordereds">
+                            <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Quantité</th>
+                                <th>Prix</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%for item in cartitems%}
+                            <tr>
+                                <td>     <img src="{{item.product.image.url}}" height="70px" width="70px">
+                                {{item.product.name}}</td>
+                                <td>{{item.product_qty}}</td>
+                                  <td>{{item.product.selling_price}}</td>
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+                        </table>
+                        <h6 class="fw-bold">Grand total
+<span class="float-end"> {{total_price}}€</span>
+                        </h6>
+                        <input type="hidden" value="COD" name="payment_mode">
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-success w-100">COD|Passer la commande</button>
+ <div id="paypal-button-container" class="mt-2"></div>
+                        </div>
+                        {%else%}
+                        <h4>Votre panier est vide</h4>
+                        {%endif%}
+                    </div>
+       </div>
+   </div>
+        </div>
+        </form>
+    </div>
+{% endblock %}
+   {% block scripts %}
+
+   <script src="https://www.paypal.com/sdk/js?client-id=AaEAq5Yp3J84bA9C6Lt2qhs4A3bkblKLfX_PYBL1J9kEgaglZMfhAi-1Lk9P1TbQxVLxpY0IvwBduXsT&currency=USD"></script>
+       <script>
+      paypal.Buttons({
+      style:{
+      layout:'vertical',
+      color:'gold',
+      shape:'rect',},
+      onClick : function(data,actions){
+
+          var fname=$("[name='fname']").val();
+          var lname=$("[name='lname']").val();
+          var email=$("[name='email']").val();
+          var phone=$("[name='phone']").val();
+          var adress=$("[name='adress']").val();
+          var city=$("[name='city']").val();
+          var state=$("[name='state']").val();
+          var country=$("[name='country']").val();
+          var pincode=$("[name='pincode']").val();
+          var token=$("[name='csrfmiddlewaretoken']").val();
+          if( fname == "" || lname == "" || email == "" || phone == "" || adress== "" || city == "" ||  state == "" ||  country == "" ||  pincode == "" )
+          {
+          alert("Vous devez remplir Le Formulaire");
+          return false;
+          }
+          else
+          {
+          return true;
+          }
+
+      },
+        // Sets up the transaction when a payment button is clicked
+          createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: '0.01' // Can also reference a variable or function
+              }
+            }]
+          });
+        },
+        // Finalize the transaction after payer approval
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(function(orderData) {
+            // Successful capture! For dev/demo purposes:
+                 //console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                 //alert(orderData.id)
+                // const transaction = orderData.purchase_units[0].payments.captures[0];
+                //alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                var fname=$("[name='fname']").val();
+                var lname=$("[name='lname']").val();
+                var email=$("[name='email']").val();
+                var phone=$("[name='phone']").val();
+                var adress=$("[name='adress']").val();
+                var city=$("[name='city']").val();
+                var state=$("[name='state']").val();
+                var country=$("[name='country']").val();
+                var pincode=$("[name='pincode']").val();
+                var token=$("[name='csrfmiddlewaretoken']").val();
+                data={
+                 "fname":fname,
+                 "lname":lname,
+                 "email":email,
+                 "phone":phone,
+                 "adress":adress,
+                 "city":city,
+                 "state":state,
+                 "country":country,
+                 "pincode":pincode,
+                 "payment_mode":"paid by paypal",
+                 "payment_id":orderData.id,
+                 csrfmiddlewaretoken:token
+                 }
+                 $.ajax({
+                     method:"POST",
+                     url:"/place-order",
+                     data:data,
+                     success:function(responsec){
+                     alert("votre commande a été passée avec succès")
+                     window.location.href = '/cart'
+
+                     }
+                 });
+
+            // When ready to go live, remove the alert and show a success message within this page. For example:
+            // const element = document.getElementById('paypal-button-container');
+            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+          });
+        }
+      }).render('#paypal-button-container');
+    </script>
+{% endblock scripts %}

@@ -1,0 +1,120 @@
+{% extends 'users/base.html' %}
+{% block title %} Detail du produit {% endblock %}
+{% load static %}
+{% block content %}
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"/>
+<div class="container" id="a">
+  <div class="row">
+    <div class="col">
+        <main class="mt-5 ecr  ">
+<h2 class="j" style="color:black;"> pièces de voiture renault</h2>
+<hr id="mery">
+
+</main>
+    </div>
+  </div>
+</div>
+
+<div class="container"  id="a">
+    <div class="row mt-5 ">
+ {% for product in produit %}
+        <div class="col-md-4 mt-5 mb-5 ">
+         <div class="card" id="yt">
+              <!--    <div class="card-body">-->
+                    <div class="category-image ">
+                           <img src="{{product.image.url}}"  class="card-img-top" id="k1"/>
+                    </div>
+       <!--    </div></div>
+              <div class="col-md-6 mt-5 mb-5">-->
+          <div class="card-body" id="z">
+                <h4 class="card-text pt-4 text-center" id="oo">{{product.name}}</h4>
+              <h4 class="card-text pt-4 text-center" id="oo">{{product.selling_price}}€</h4>
+<a href="{% url 'detail' product.id %}">
+              <button class="btn btn-outline-dark btn-sm rounded px-4 mt-4"  id="ty" >Voir</button>
+</a>
+          </div>
+          </div>
+            </div>
+        {% endfor %}
+            </div>
+                </div>
+<div class="pt-5">
+
+  <footer class="text-white text-center text-lg-start bg-dark">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <!--Grid row-->
+      <div class="row mt-4">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4">Groupe Renault</h5>
+
+          <p>
+            Renault est un constructeur automobile français.
+              Il est lié aux constructeurs japonais Nissan depuis 1999 et Mitsubishi depuis 2017,
+              à travers l'alliance Renault-Nissan-Mitsubishi qui est, au premier semestre 2017,
+              le premier constructeur automobile mondial.
+          </p>
+
+
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+
+
+          <ul class="fa-ul" style="margin-left: 1.65em;">
+            <li class="mb-3">
+              <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">44, BD Khalid ibnou Al walid، Casablanca 20250</span>
+            </li>
+            <li class="mb-3">
+              <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">monserviceclient@renault.com.</span>
+            </li>
+            <li class="mb-3">
+              <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">0520-482008</span>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4">Horaires d'ouvertures</h5>
+
+          <table class="table text-center text-white">
+            <tbody class="fw-normal">
+              <tr>
+                <td>Lundi - Vendredi:</td>
+                <td>8:30 - 6:30</td>
+              </tr>
+              <tr>
+                <td>Samedi :</td>
+                <td>8:30 - 13:00</td>
+
+            </tbody>
+          </table>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+
+</div>
+
+{% endblock content%}
+ {% block scripts %}
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+<script src="{% static 'js/script.js'%}"></script>
+        {% endblock scripts %}
